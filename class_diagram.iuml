@@ -1,0 +1,53 @@
+@startuml
+class InPort {
+String name
+double value
+String Type
+void update(double value)
+}
+class OutPort {
+String name
+double value
+String Type
+InPorts* connections
+void attach(InPort in_port)
+void dettach(InPort in_port)
+void update_value(double value)
+}
+InPort "*"--"1" OutPort
+
+class Component {
+String name
+String description
+InPorts* in_ports
+OutPorts* out_ports
+double te
+double tr
+int actual_state
+double delta_int(State state)
+State delta_ext(State state, Event event)
+State lambda(State state, double value)
+double ta(State state)
+}
+Component --"1..*" InPort
+Component --"1..*" OutPort
+class Simulateur {
+double t
+}
+Component "1..*"--"1" Simulateur
+
+class Generator {
+void generator()
+}
+class Buffer {
+void buffer()
+}
+class Processor {
+void process()
+}
+Generator --|> Component
+Buffer --|> Component
+Processor --|> Component
+
+
+@enduml
