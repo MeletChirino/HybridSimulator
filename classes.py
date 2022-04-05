@@ -1,4 +1,5 @@
 class InPort:
+    #observer
     def __init__(self, name):
         self.name = name
         self.value = 0
@@ -8,6 +9,7 @@ class InPort:
         print(F"{self.type}-{self.name}: updated to => {self.value}")
 
 class OutPort:
+    #subject
     def __init__(self, name):
         self.name = name
         self.value = 0
@@ -27,16 +29,34 @@ class OutPort:
         print(F"{self.type}-{self.name}: updated to => {self.value}")
 
 class Component:
-    def __init__(self, name, in_ports, out_ports, **kwargs):
+    def __init__(self, name, **kwargs):
         self.name = name
         self.description = ""
         if kwargs.get('description'):
             self.description = kwargs['description']
-        self.in_ports = in_ports
-        self.out_ports = out_ports
+
+        self.input = []
+        if kwargs.get('in_ports'):
+            number = kwargs['out_ports']
+            print(F"Setting {number} input ports")
+            for i in range(number):
+                self.input.append(InPort(F"IN{i}"))
+
+        self.output = []
+        if kwargs.get('out_ports'):
+            number = kwargs['out_ports']
+            print(F"Setting {number} output ports")
+            for i in range(number):
+                self.output.append(OutPort(F"OUT{i}"))
+
+            self.def_in_ports(kwargs['out_ports'])
         self.actual_state = 0
         self.te = 0.0
         self.tr = 0.0
+
+    def def_in_ports(self, number):
+        for i in range(number):
+            self.input.append(InPort(F"IN{i}"))
 
     def delta_int(self, state):
     # returns next state if timeout event
