@@ -24,13 +24,21 @@ class OutPort:
 
     def update_value(self, value):
         self.value = value
+        impacted_ports = []
         for port in self.connections:
             port.update(self.value)
+            impacted_ports.append(port.parent)
         print(F"{self.type}-{self.name}: updated to => {self.value}")
+        return impacted_ports
 
 class Component:
     def __init__(self, name, **kwargs):
         self.name = name
+        self.current_state = 0
+        self.te = 0.0
+        self.tr = 0.0
+        self.tl = 0.0
+
         self.description = ""
         if kwargs.get('description'):
             self.description = kwargs['description']
@@ -48,14 +56,3 @@ class Component:
             print(F"Setting {number} output ports")
             for i in range(number):
                 self.output.append(OutPort(F"OUT{i}"))
-
-            self.def_in_ports(kwargs['out_ports'])
-        self.current_state = 0
-        self.te = 0.0
-        self.tr = 0.0
-        self.tl = 0.0
-
-    def def_in_ports(self, number):
-        for i in range(number):
-            self.input.append(InPort(F"IN{i}"))
-

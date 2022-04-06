@@ -28,6 +28,7 @@ class Proc(Component):
 class Generator(Component):
     def init(self):
         self.current_state = 0
+        self.tr = 2.0
     def avance(self):
         return 2.0
     def internal(self):
@@ -35,5 +36,7 @@ class Generator(Component):
     def external(self):
         pass
     def generate_output(self):
-        self.output[0].update_value = 1
+        impacted_port = self.output[0].update_value = 1
+        return impacted_ports
+
 
