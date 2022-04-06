@@ -5,6 +5,7 @@ from math import inf
 class Proc(Component):
     def init(self):
         self.current_state = 0
+        self.tr = inf
 
     def internal(self):
         if(self.current_state == 1):
@@ -23,9 +24,9 @@ class Proc(Component):
         return -1
     def generate_output(self):
         if (self.current_state == 1):
-            self.output[0].update_value(1)
             self.tr = self.avance()
-    
+            return self.output[0].update_value(1)
+
     def conflict(self):
         pass
 
@@ -40,9 +41,9 @@ class Generator(Component):
     def external(self):
         pass
     def generate_output(self):
-        self.output[0].update_value = 1
         self.tr = self.avance()
-    
+        return self.output[0].update_value(1)
+
     def conflict(self):
         pass
 
@@ -50,6 +51,7 @@ class Buffer(Component):
     def init(self):
         self.current_state = 0
         self.q = 0
+        self.tr = inf
 
     def internal(self):
         if(self.current_state == 1):
@@ -57,23 +59,22 @@ class Buffer(Component):
             self.q -= 1
 
     def external(self, port):
-        import pdb; pdb.set_trace()
         if(self.current_state == 0 and port == self.input[0]):
             self.current_state = 1
             self.q += 1
 
         if(self.current_state == 1 and port == self.input[0]):
             self.q += 1
-        
+
         if(self.current_state == 2 and port == self.input[0]):
             self.q += 1
-        
+
         if(self.current_state == 2 and self.q > 0 and port == self.input[1]):
             self.current_state = 1
 
         if(self.current_state == 2 and self.q == 0 and port == self.input[1]):
             self.current_state = 0
-    
+
     def avance(self):
         if self.current_state == 0:
             return inf

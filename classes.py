@@ -4,9 +4,14 @@ class InPort:
         self.name = name
         self.value = 0
         self.type = "In"
+
+    def def_source(self, component):
+        self.source = component
+    def def_target(self, component):
+        self.target = component
+
     def update(self, value):
         self.value = value
-        print(F"{self.type}-{self.name}: updated to => {self.value}")
 
 class OutPort:
     #subject
@@ -26,9 +31,9 @@ class OutPort:
         self.value = value
         impacted_ports = []
         for port in self.connections:
+            #import pdb; pdb.set_trace()
             port.update(self.value)
-            impacted_ports.append(port.parent)
-        print(F"{self.type}-{self.name}: updated to => {self.value}")
+            impacted_ports.append(port)
         return impacted_ports
 
 class Component:
@@ -45,7 +50,7 @@ class Component:
 
         self.input = []
         if kwargs.get('in_ports'):
-            number = kwargs['out_ports']
+            number = kwargs['in_ports']
             print(F"Setting {number} input ports")
             for i in range(number):
                 self.input.append(InPort(F"IN{i}"))
