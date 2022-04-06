@@ -31,7 +31,6 @@ class OutPort:
         self.value = value
         impacted_ports = []
         for port in self.connections:
-            #import pdb; pdb.set_trace()
             port.update(self.value)
             impacted_ports.append(port)
         return impacted_ports

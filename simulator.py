@@ -23,6 +23,7 @@ class Simulator:
             print("finding lowest tr")
             tr = inf
             for component in self.component_list:
+                #import pdb; pdb.set_trace()
                 if component.tr < tr:
                     tr = component.tr
             print(F"lowest tr => {tr}")
@@ -33,14 +34,14 @@ class Simulator:
             for component in self.component_list:
                 if component.tr == tr:
                     inmi_components.append(component)
-            print(F"component list => {self.component_list}")
+            print(F"inminent component list => {inmi_components}")
 
             t += tr
             #tr update
             print("Update component list")
             for component in self.component_list:
-                component.tr -= t
-                print(F"{component}: new tr => {component.tr}")
+                component.tr -= tr
+                print(F"{component.name}: new tr => {component.tr}")
 
             # update outputs
             external_events = []
@@ -48,7 +49,7 @@ class Simulator:
             for component in self.component_list:
                 impact_list = component.generate_output()
                 print(F"impact list {impact_list}")
-                #|import pdb; pdb.set_trace()
+                #import pdb; pdb.set_trace()
                 if impact_list:
                     for impact_port in impact_list:
                         external_events.append(impact_port)
@@ -56,6 +57,11 @@ class Simulator:
                                 impact_port.target
                                 )
 
+            print(F"extern component list => {external_comp}")
+            for port in external_events:
+                print(F"{port.source.name} => {port.target.name}.{port.name}")
+
+            print(F"Q = {self.component_list[1].q}")
             for component in self.component_list:
                 both = exist(inmi_components, component) and exist(external_events, component)
                 if both:
