@@ -50,7 +50,7 @@ class Component:
                 self.output.append(OutPort(F"OUT{i}"))
 
             self.def_in_ports(kwargs['out_ports'])
-        self.actual_state = 0
+        self.current_state = 0
         self.te = 0.0
         self.tr = 0.0
 
