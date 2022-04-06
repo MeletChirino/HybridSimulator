@@ -53,23 +53,9 @@ class Component:
         self.current_state = 0
         self.te = 0.0
         self.tr = 0.0
+        self.tl = 0.0
 
     def def_in_ports(self, number):
         for i in range(number):
             self.input.append(InPort(F"IN{i}"))
 
-    def delta_int(self, state):
-    # returns next state if timeout event
-        return 0
-
-    def delta_ext(self, state, event):
-    # returns next state if discret event
-        return 0
-
-    def ta(self, state):
-    # returns timeout of certain state
-        return 0
-
-    def lambdia(self, state, output):
-    # return new output value when timeout 
-        return 0
