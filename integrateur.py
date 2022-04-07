@@ -9,6 +9,8 @@ class Integrateur(Component):
     def init(self):
         self.current_state = 0
         self.tr = self.hstep
+        self.x = 0
+        self.dx = 0
 
     def internal(self):
         if self.current_state == 0:
@@ -16,11 +18,11 @@ class Integrateur(Component):
 
     def external(self, port):
         if(self.current_state == 0 and port == self.input[0]):
-            self.dx = self.input[0]
+            self.dx = self.input[0].value
             self.x += self.dx * self.te 
 
     def avance(self):
-        pass
+        return self.hstep
 
     def generate_output(self):
         if (self.current_state == 0):

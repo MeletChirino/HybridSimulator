@@ -59,8 +59,6 @@ class Simulator:
         print("Component init finished")
 
         while(t < self.t_end):
-            time.append(t)
-            variable_q.append(self.component_list[1].q)
             cowsay.milk(F"Time {t}")
 
             # append graph variables

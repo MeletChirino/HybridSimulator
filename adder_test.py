@@ -3,6 +3,7 @@ from adder import Adder4x1 as Adder
 from step import Step
 from tools import connect
 from simulator import Simulator
+from integrateur import Integrateur
 
 # python modules
 import matplotlib.pyplot as plt
@@ -29,6 +30,7 @@ if __name__ == "__main__":
             "Step_4",
             out_ports = 1
             )
+    integrateur = Integrateur("Integrator", in_ports = 1, out_ports = 1)
     # connect components
     connect(
             step1,
@@ -54,15 +56,22 @@ if __name__ == "__main__":
             step4.output[0],
             [adder.input[3], ]
             )
+    connect(
+            adder,
+            integrateur,
+            adder.output[0],
+            [integrateur.input[0], ]
+            )
     component_list = [
             step1, step2, step3, step4,
-            adder
+            adder, integrateur
             ]
     #set step values
     step1.set_values(1, 0, 1)
-    step2.set_values(4, 0, 1)
-    step3.set_values(1, 0, 1)
-    step4.set_values(3, 0, 2)
+    step2.set_values(2, 0, -3)
+    step3.set_values(3, 0, -2)
+    step4.set_values(4, 0, 10)
+    integrateur.set_values(1/1000)
 
     simulator = Simulator(
             7,
@@ -82,11 +91,21 @@ if __name__ == "__main__":
                 "index": 1
                 }
             )
+    simulator.add_graph_trace(
+            {
+                "name": "integrateur",
+                "port": "output[0]",
+                "index": 5
+                }
+            )
 
     simulator.run()
     draw_data = simulator.get_graph_data()
 
     plt.stem(draw_data[0].data, draw_data[1].data)
     plt.show()
+    plt.stem(draw_data[0].data, draw_data[2].data)
+    plt.show()
+
 
 
