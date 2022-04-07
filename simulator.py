@@ -1,5 +1,6 @@
 from math import inf
 from tools import exist
+import matplotlib.pyplot as plt
 
 class Simulator:
     def __init__(self, t_end, **kwargs):
@@ -17,6 +18,10 @@ class Simulator:
         for component in self.component_list:
             component.init()
         print("Component finish")
+
+        time = []
+        variable_q = []
+
         while(t < self.t_end):
             print(F"---- Time {t} ----")
             #find slowest tr
@@ -73,6 +78,19 @@ class Simulator:
                     port = external_events[index]
                     #import pdb; pdb.set_trace()
                     component.external(port)
+
+            time.append(t)
+            variable_q.append(self.component_list[1].q)
+        self.plotting(time, variable_q)
+    
+    def plotting(self, time, q_values):
+        plt.step(time, q_values )
+        plt.show()
+        for x in time:
+            print(x)
+        for y in q_values:
+            print(y)
+
 
 
 
