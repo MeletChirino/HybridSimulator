@@ -1,6 +1,7 @@
 import cowsay
 from math import inf
 from tools import exist
+import matplotlib.pyplot as plt
 
 class Simulator:
     def __init__(self, t_end, **kwargs):
@@ -17,6 +18,10 @@ class Simulator:
         print("Component init")
         for component in self.component_list:
             component.init()
+        print("Component finish")
+
+        time = []
+        variable_q = []
         print("Component init finished")
 
         while(t < self.t_end):
@@ -81,3 +86,24 @@ class Simulator:
                     component.tr = component.avance()
                 else:
                     pass
+
+            time.append(t)
+            variable_q.append(self.component_list[1].q)
+        self.plotting(time, variable_q)
+    
+    def plotting(self, time, q_values):
+        plt.step(time, q_values )
+        plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+                    
