@@ -11,13 +11,11 @@ class Proc(Component):
         if(self.current_state == 1):
             print(F"{self.name}: state 1 => 0")
             self.current_state = 0
-            self.tr = inf
 
     def external(self, port):
         if(self.current_state == 0):
             print(F"{self.name}: state 0 => 1")
             self.current_state = 1
-            self.tr = self.avance()
 
     def avance(self):
     #time advance
@@ -28,8 +26,8 @@ class Proc(Component):
         return -1
 
     def generate_output(self):
-        print(F"{self.name}: generate impulsion")
         if (self.current_state == 1):
+            print(F"{self.name}: generate impulsion")
             return self.output[0].update_value(1)
 
     def conflict(self):
@@ -42,7 +40,6 @@ class Generator(Component):
     def avance(self):
         return 2.0
     def internal(self):
-        self.tr = self.avance()
         pass
     def external(self):
         pass
@@ -64,7 +61,6 @@ class Buffer(Component):
             print(F"{self.name}: state 1 => 2")
             self.current_state = 2
             self.q -= 1
-            self.tr = inf
             return 0
 
     def external(self, port):
@@ -72,7 +68,6 @@ class Buffer(Component):
             print(F"{self.name}: state 0 => 1")
             self.current_state = 1
             self.q += 1
-            self.tr = 0
             return 0
 
         if(self.current_state == 1 and port == self.input[0]):
@@ -81,7 +76,7 @@ class Buffer(Component):
             return 0
 
         if(self.current_state == 2 and port == self.input[0]):
-            print(F"{self.name}: state 2 => 1")
+            print(F"{self.name}: state 2 => 2")
             self.q += 1
             return 0
 
@@ -107,7 +102,6 @@ class Buffer(Component):
     def generate_output(self):
         if (self.current_state == 1):
             return self.output[0].update_value(1)
-        self.tr = self.avance()
 
     def conflict(self):
         self.external()
