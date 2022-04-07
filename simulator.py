@@ -1,7 +1,10 @@
+# python modules
 import cowsay
-from math import inf
-from tools import exist
 import matplotlib.pyplot as plt
+from math import inf
+
+# local modules
+from tools import exist, Data
 
 class Simulator:
     def __init__(self, t_end, **kwargs):
@@ -9,9 +12,37 @@ class Simulator:
         self.components_list = []
         if kwargs.get('component_list'):
             self.component_list = kwargs['component_list']
+        self.graph_traces= []
+        self.graph_values = []
 
     def add_component(self, component):
         self.component_list.append(component)
+
+    def add_graph_trace(self, trace):
+        self.graph_traces.append(trace)
+
+    def draw_graph(self):
+        print(self.graph_values)
+        time = self.graph_values[0]
+        values =self.graph_values[1]
+        plt.stem(time, values)
+        plt.show()
+
+    def get_graph_data(self):
+        data_list = []
+        ind_data = Data('time', self.graph_values[0])
+
+        data_list.append(ind_data)
+        n_traces = len(self.graph_traces)
+        for i in range(n_traces):
+            data_list.append(
+                Data(
+                    self.graph_traces[i]['name'],
+                    self.graph_values[i+1]
+                    )
+                )
+        return data_list
+
 
     def run(self):
         t = 0
@@ -21,13 +52,22 @@ class Simulator:
         print("Component finish")
 
         time = []
-        variable_q = []
+        for trace in self.graph_traces:
+            print(trace)
+            exec(F"{trace['name']} = []")
+
         print("Component init finished")
 
         while(t < self.t_end):
             time.append(t)
             variable_q.append(self.component_list[1].q)
             cowsay.milk(F"Time {t}")
+
+            # append graph variables
+            time.append(t)
+            for trace in self.graph_traces:
+                command = get_append_command(trace)
+                exec(command)
 
             #find lowest tr
             print("finding lowest tr")
@@ -52,15 +92,13 @@ class Simulator:
             for component in self.component_list:
                 if component.tr == 0:
                     inmi_components.append(component)
-            print(F"inminent component list => {inmi_components}")
+            print(F"inmi compo = {inmi_components}")
 
             # update outputs
             external_events = []
             external_comp = []
             for component in inmi_components:
                 impact_list = component.generate_output()
-                print(F"impact list {impact_list}")
-                #import pdb; pdb.set_trace()
                 if impact_list:
                     for impact_port in impact_list:
                         external_events.append(impact_port)
@@ -68,7 +106,6 @@ class Simulator:
                                 impact_port.target
                                 )
 
-            print(F"extern component list => {external_comp}")
             for port in external_events:
                 print(F"{port.source.name} => {port.target.name}.{port.name}")
 
@@ -88,24 +125,18 @@ class Simulator:
                     component.tr = component.avance()
                 else:
                     pass
-        print(time)
-        print(variable_q)
-        self.plotting(time, variable_q)
-    
-    def plotting(self, time, q_values):
-        plt.stem(time, q_values )
+        self.graph_values.append(time)
+        for trace in self.graph_traces:
+            exec(F"self.graph_values.append({trace['name']})")
+
+    def plot_stem(self, time, values):
+        plt.stem(time, values )
         plt.show()
         
 
 
 
-
-
-
-
-
-
-
-
-
-                    
+def get_append_command(trace):
+    command = F"{trace['name']}.append(self.component_list[{trace['index']}].{trace['port']}.value)"
+    print(command)
+    return command
