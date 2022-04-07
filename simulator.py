@@ -94,10 +94,6 @@ class Simulator:
     def plotting(self, time, q_values):
         plt.step(time, q_values )
         plt.show()
-        for x in time:
-            print(x)
-        for y in q_values:
-            print(y)
 
 
 
