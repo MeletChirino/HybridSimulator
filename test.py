@@ -1,12 +1,8 @@
 import time
 from component import Buffer, Generator, Proc
 from simulator import Simulator
+from tools import connect
 
-def connect(source, target, out_port, in_ports):
-    for port in in_ports:
-        port.def_source(source)
-        port.def_target(target)
-        out_port.attach(port)
 
 if __name__ == "__main__":
     generator = Generator(
@@ -51,6 +47,3 @@ if __name__ == "__main__":
             component_list = component_list
             )
     simulator.run()
-
-
-
