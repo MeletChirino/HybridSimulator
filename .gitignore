@@ -3,3 +3,4 @@
 **.png
 **.txt
 **.log
+__pycache__/**
