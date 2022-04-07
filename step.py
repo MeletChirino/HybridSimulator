@@ -9,9 +9,9 @@ class Step(Component):
 
     def init(self):
         input_ports = len(self.input)
-        if not input_ports == 2:
-            raise Exception("2 Input Ports Required")
-        output_ports = len(self.input)
+        if input_ports > 0:
+            raise Exception("Input Port not Required")
+        output_ports = len(self.output)
         if not output_ports == 1:
             raise Exception("1 Output Port Required")
         self.current_state = 0
@@ -19,24 +19,22 @@ class Step(Component):
         self.output[0].update_value(self.x0)
 
     def avance(self):
-        if current_state == 0:
+        if self.current_state == 0:
             return self.ts
-        if current_state == 1:
+        if self.current_state == 1:
             return inf
 
     def internal(self):
         if(self.current_state == 0):
             print(F"{self.name}: state 1 => 2")
             self.current_state = 1
-            return 0
 
     def external(self):
         pass
 
     def generate_output(self):
-        if(self.current_state == 0):
-            return self.output[0].update_value(self.x0)
-        elif self.current_state == 1:
+        if self.current_state == 0:
+            print(F"{self.name}: update value to {self.xf}")
             return self.output[0].update_value(self.xf)
 
 
