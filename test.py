@@ -47,7 +47,7 @@ if __name__ == "__main__":
             processor
             ]
     simulator = Simulator(
-            10,
+            13,
             component_list = component_list
             )
     simulator.run()
