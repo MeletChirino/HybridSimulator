@@ -67,14 +67,14 @@ if __name__ == "__main__":
             adder, integrateur
             ]
     #set step values
-    step1.set_values(1, 0, 1)
+    step1.set_values(1, 1, 2)
     step2.set_values(2, 0, -3)
     step3.set_values(3, 0, -2)
     step4.set_values(4, 0, 10)
     integrateur.set_values(1/1000)
 
     simulator = Simulator(
-            7,
+            5,
             component_list = component_list
             )
     simulator.add_graph_trace(
@@ -102,9 +102,9 @@ if __name__ == "__main__":
     simulator.run()
     draw_data = simulator.get_graph_data()
 
-    plt.stem(draw_data[0].data, draw_data[1].data)
+    plt.plot(draw_data[0].data, draw_data[1].data)
     plt.show()
-    plt.stem(draw_data[0].data, draw_data[2].data)
+    plt.plot(draw_data[0].data, draw_data[3].data)
     plt.show()
 
 
