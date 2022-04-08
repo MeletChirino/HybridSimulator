@@ -28,7 +28,7 @@ class Simulator:
         plt.stem(time, values)
         plt.show()
 
-    def get_graph_data(self):
+    def get_graph_data(self, **kwargs):
         data_list = []
         ind_data = Data('time', self.graph_values[0])
 
@@ -41,6 +41,10 @@ class Simulator:
                     self.graph_values[i+1]
                     )
                 )
+        if kwargs.get('trace_name'):
+            for data in data_list:
+                if data.name == kwargs['trace_name']:
+                    return data
         return data_list
 
 

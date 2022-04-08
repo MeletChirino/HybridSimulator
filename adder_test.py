@@ -79,7 +79,7 @@ if __name__ == "__main__":
             )
     simulator.add_graph_trace(
             {
-                "name": "final_value",
+                "name": "step_data",
                 "port": "output[0]",
                 "index": 4
                 }
@@ -101,11 +101,17 @@ if __name__ == "__main__":
 
     simulator.run()
     draw_data = simulator.get_graph_data()
+    time_data = simulator.get_graph_data(
+            trace_name = 'time'
+            )
+    step_data = simulator.get_graph_data(
+            trace_name = 'step_data'
+            )
 
-    plt.plot(draw_data[0].data, draw_data[1].data)
-    plt.show()
-    plt.plot(draw_data[0].data, draw_data[3].data)
-    plt.show()
+    plt.plot(time_data.data, step_data.data)
+    plt.savefig("fig1.png")
+    plt.plot(time_data.data, draw_data[3].data)
+    plt.savefig("fig2.png")
 
 
 
