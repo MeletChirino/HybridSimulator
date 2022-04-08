@@ -1,6 +1,9 @@
+# python modules
 from math import inf
-from classes import Component
 from scipy import integrate
+
+# local modules
+from components.base_classes import Component
 
 class Integrateur(Component):
     def set_values(self, hstep):

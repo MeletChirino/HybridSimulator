@@ -1,14 +1,14 @@
 # local modules
-from adder import Adder4x1 as Adder
-from step import Step
-from tools import connect
-from simulator import Simulator
-from integrateur import Integrateur
+from components.arithmetics import Adder4x1 as Adder
+from components.signals import Step
+from components.ode import Integrateur
+from kernel.tools import connect
+from kernel.simulator import Simulator
 
 # python modules
 import matplotlib.pyplot as plt
 
-if __name__ == "__main__":
+def main():
     adder = Adder(
             "Adder4x1",
             in_ports = 4,
@@ -112,6 +112,4 @@ if __name__ == "__main__":
     plt.savefig("fig1.png")
     plt.plot(time_data.data, draw_data[3].data)
     plt.savefig("fig2.png")
-
-
 

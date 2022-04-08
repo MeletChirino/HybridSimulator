@@ -1,4 +1,4 @@
-from tests.generator.main import main
+from tests.adder.main import main
 
 if __name__ == "__main__":
     main()
