@@ -2,7 +2,7 @@
 from components.arithmetics import Adder4x1 as Adder
 from components.signals import Step
 from components.ode import Integrateur
-from kernel.tools import connect
+from kernel.tools import connect, Log
 from kernel.simulator import Simulator
 
 # python modules
@@ -63,9 +63,13 @@ def main():
     step3.set_values(3, 0, -2)
     step4.set_values(4, 0, 10)
     integrateur.set_values(1/1000)
+    log_ = Log(
+            debug_mode = True
+            )
 
     simulator = Simulator(
             5,
+            log = log_,
             component_list = component_list
             )
     simulator.add_graph_trace(

@@ -1,3 +1,7 @@
+# python modules
+import os
+import time
+
 def exist(list_, element):
     for element_ in list_:
         if element_ == element:
@@ -22,12 +26,20 @@ def connect(source_connection, *target_connections):
         in_port.def_target(target_component)
         out_port.attach(in_port)
 
+class Log:
+    def __init__(self, **kwargs):
+        local_t = time.localtime()
+        date = F"{local_t.tm_year}_{local_t.tm_mon}_{local_t.tm_mday}"
+        hour = F'{local_t.tm_hour}_{local_t.tm_min}_{local_t.tm_sec}'
+        file_name = F"logs/{date}-{hour}.log"
+        self.debug_mode = kwargs['debug_mode']
+        self.file_name = file_name
 
-def connect1(source, target, out_port, in_ports):
-    for port in in_ports:
-        port.def_source(source)
-        port.def_target(target)
-        out_port.attach(port)
+    def print(self, logs):
+        if self.debug_mode:
+            f = open(self.file_name, 'a')
+            f.write(logs)
+            f.close()
 
 class Data:
     def __init__(self, name, data):

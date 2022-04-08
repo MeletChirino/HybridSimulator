@@ -12,6 +12,8 @@ class Simulator:
         self.components_list = []
         if kwargs.get('component_list'):
             self.component_list = kwargs['component_list']
+        if kwargs.get('log'):
+            self.log = kwargs['log']
         self.graph_traces= []
         self.graph_values = []
 
@@ -50,20 +52,20 @@ class Simulator:
 
     def run(self):
         t = 0
-        print("Component init")
+        self.log.print("Component init")
         for component in self.component_list:
             component.init()
-        print("Component finish")
+        self.log.print("Component finish")
 
         time = []
         for trace in self.graph_traces:
             print(trace)
             exec(F"{trace['name']} = []")
 
-        print("Component init finished")
+        self.log.print("Component init finished")
 
         while(t < self.t_end):
-            cowsay.milk(F"Time {t}")
+            self.log.print(F" ------ Time {t} ------ ")
 
             # append graph variables
             time.append(t)
@@ -72,29 +74,29 @@ class Simulator:
                 exec(command)
 
             #find lowest tr
-            print("finding lowest tr")
+            self.log.print("finding lowest tr")
             tr = inf
             for component in self.component_list:
                 #import pdb; pdb.set_trace()
                 if component.tr < tr:
                     tr = component.tr
-            print(F"lowest tr => {tr}")
+            self.log.print(F"lowest tr => {tr}")
 
             t += tr # time just increased
             #tr update
-            print("Update component list")
+            self.log.print("Update component list")
             for component in self.component_list:
                 component.tr -= tr
                 component.te += tr
-                print(F"{component.name}: new tr => {component.tr}")
+                self.log.print(F"{component.name}: new tr => {component.tr}")
 
             #create inminent components list
-            print(F"Creating inminent component list")
+            self.log.print(F"Creating inminent component list")
             inmi_components = []
             for component in self.component_list:
                 if component.tr == 0:
                     inmi_components.append(component)
-            print(F"inmi compo = {inmi_components}")
+            self.log.print(F"inmi compo = {inmi_components}")
 
             # update outputs
             external_events = []
@@ -109,7 +111,7 @@ class Simulator:
                                 )
 
             for port in external_events:
-                print(F"{port.source.name} => {port.target.name}.{port.name}")
+                self.log.print(F"{port.source.name} => {port.target.name}.{port.name}")
 
             #create ouputs and update tr
             for component in self.component_list:
@@ -134,11 +136,8 @@ class Simulator:
     def plot_stem(self, time, values):
         plt.stem(time, values )
         plt.show()
-        
-
 
 
 def get_append_command(trace):
     command = F"{trace['name']}.append(self.component_list[{trace['index']}].{trace['port']}.value)"
-    print(command)
     return command
