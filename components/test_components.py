@@ -1,5 +1,5 @@
-from classes import Component
-from tools import *
+from components.base_classes import Component
+from kernel.tools import *
 from math import inf
 
 class Proc(Component):

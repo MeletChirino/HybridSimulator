@@ -1,10 +1,9 @@
 import time
-from component import Buffer, Generator, Proc
-from simulator import Simulator
-from tools import connect
+from components.test_components import Buffer, Generator, Proc
+from kernel.simulator import  Simulator
+from kernel.tools import connect
 
-
-if __name__ == "__main__":
+def main():
     generator = Generator(
             "Generator",
             out_ports = 1

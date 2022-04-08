@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from math import inf
 
 # local modules
-from tools import exist, Data
+from kernel.tools import exist, Data
 
 class Simulator:
     def __init__(self, t_end, **kwargs):

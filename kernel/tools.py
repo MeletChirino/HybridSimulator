@@ -1,5 +1,3 @@
-from classes import Component
-
 def exist(list_, element):
     for element_ in list_:
         if element_ == element:
