@@ -33,34 +33,25 @@ def main():
     integrateur = Integrateur("Integrator", in_ports = 1, out_ports = 1)
     # connect components
     connect(
-            step1,
-            adder,
-            step1.output[0],
-            [adder.input[0], ]
+            (step1, 0),
+            #in ports
+            (adder, 0)
             )
     connect(
-            step2,
-            adder,
-            step2.output[0],
-            [adder.input[1], ]
+            (step2, 0),
+            (adder, 1)
             )
     connect(
-            step3,
-            adder,
-            step3.output[0],
-            [adder.input[2], ]
+            (step3, 0),
+            (adder, 2)
             )
     connect(
-            step4,
-            adder,
-            step4.output[0],
-            [adder.input[3], ]
+            (step4, 0),
+            (adder, 3)
             )
     connect(
-            adder,
-            integrateur,
-            adder.output[0],
-            [integrateur.input[0], ]
+            (adder, 0),
+            (integrateur, 0)
             )
     component_list = [
             step1, step2, step3, step4,
