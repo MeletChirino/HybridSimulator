@@ -13,7 +13,7 @@ class Integrateur(Component):
         self.current_state = 0
         self.tr = self.hstep
         self.x = 0.0
-        self.dx = 0.0
+        self.dx = float(self.input[0].value)
 
     def internal(self):
         if self.current_state == 0:
@@ -22,9 +22,8 @@ class Integrateur(Component):
 
     def external(self, port):
         if(self.current_state == 0 and port == self.input[0]):
-            self.x += self.dx * self.te 
+            self.x += self.dx * self.te
             self.dx = float(self.input[0].value)
-            #import pdb; pdb.set_trace()
 
     def avance(self):
         return self.hstep

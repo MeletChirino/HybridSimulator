@@ -20,6 +20,11 @@ class Adder4x1(Component):
         self.current_state = 0
         self.tr = inf
         self.sum = 0
+        for port in self.input:
+            self.sum += port.value
+            print(F'{port.name}.value = {port.value}')
+            print(F'sum = {self.sum}')
+        self.output[0].update_value(self.sum)
 
     def internal(self):
         if self.current_state == 1:
@@ -31,7 +36,6 @@ class Adder4x1(Component):
             print(F"{self.name}: state 0 => 1")
             self.current_state = 1
             self.sum = 0
-            #import pdb; pdb.set_trace()
             for port in self.input:
                 self.sum += port.value
 
