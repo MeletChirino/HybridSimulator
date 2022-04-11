@@ -7,6 +7,7 @@ from kernel.simulator import Simulator
 
 # python modules
 import matplotlib.pyplot as plt
+import os
 
 def main():
     #initialize components
@@ -125,6 +126,11 @@ def main():
             integrated_data.data,
             label = 'Integrated Data'
             )
+    plt.title('Hybrid Simulator')
     plt.legend()
-    plt.savefig("fig2.png")
+    test_path = os.path.dirname(__file__)
+    file_name = 'fig.png'
+    file_path = F'{test_path}/img/{file_name}'
+    plt.savefig(file_path)
+    plt.show()
 
