@@ -102,6 +102,7 @@ class Simulator:
             external_events = []
             external_comp = []
             for component in inmi_components:
+                component.te = 0
                 impact_list = component.generate_output()
                 if impact_list:
                     for impact_port in impact_list:
