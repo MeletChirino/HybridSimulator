@@ -68,7 +68,7 @@ def main():
     # IMPORTANT values must be set after connection
     step1.set_values(1, 1, 2)
     step2.set_values(2, 0, -3)
-    step3.set_values(3, 0, -2)
+    step3.set_values(7, 2, -2)
     step4.set_values(4, 0, 10)
     integrateur.set_values(1/1000)
     # log object
@@ -78,7 +78,7 @@ def main():
 
     # --- Starting simulator ---
     simulator = Simulator(
-            5,
+            10,
             log = log_,
             component_list = component_list
             )
@@ -87,13 +87,6 @@ def main():
                 "name": "step_data",
                 "port": "output[0]",
                 "index": 4
-                }
-            )
-    simulator.add_graph_trace(
-            {
-                "name": "step2",
-                "port": "output[0]",
-                "index": 1
                 }
             )
     simulator.add_graph_trace(
