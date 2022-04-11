@@ -4,6 +4,28 @@ from math import inf
 # local modules
 from components.base_classes import Component
 
+class Constant(Component):
+    def set_values(self, x0):
+        self.x0 = x0
+
+    def init(self):
+        input_ports = len(self.input)
+        if not input_ports == 0:
+            raise Exception("Input Port not Required")
+        output_ports = len(self.output)
+        if not output_ports == 1:
+            raise Exception("1 Output Port Required")
+        self.output[0].update_value(self.x0)
+    def avance(self):
+        pass
+    def internal(self):
+        pass
+    def external(self):
+        pass
+    def generate_outpue(self):
+        pass
+
+
 class Step(Component):
     def set_values(self, ts, x0, xf):
         self.ts = ts

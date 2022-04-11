@@ -10,9 +10,17 @@ class Integrateur(Component):
         self.hstep = hstep
 
     def init(self):
+        input_ports = len(self.input)
+        if not input_ports > 0 and input_ports < 3:
+            raise Exception("Input Port not Required")
+        output_ports = len(self.output)
+        if not output_ports == 1:
+            raise Exception("1 Output Port Required")
         self.current_state = 0
         self.tr = self.hstep
         self.x = 0.0
+        if input_ports == 2:
+            self.x = self.input[1].value
         self.dx = float(self.input[0].value)
 
     def internal(self):
