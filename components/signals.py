@@ -12,7 +12,7 @@ class Step(Component):
 
     def init(self):
         input_ports = len(self.input)
-        if input_ports > 0:
+        if not input_ports == 0:
             raise Exception("Input Port not Required")
         output_ports = len(self.output)
         if not output_ports == 1:

@@ -33,6 +33,7 @@ class OutPort:
         for port in self.connections:
             port.update(self.value)
             impacted_ports.append(port)
+            #import pdb; pdb.set_trace()
         return impacted_ports
 
 class Component:

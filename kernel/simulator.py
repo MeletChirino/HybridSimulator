@@ -67,12 +67,6 @@ class Simulator:
         while(t < self.t_end):
             self.log.print(F" ------ Time {t} ------ ")
 
-            # append graph variables
-            time.append(t)
-            for trace in self.graph_traces:
-                command = get_append_command(trace)
-                exec(command)
-
             #find lowest tr
             self.log.print("finding lowest tr")
             tr = inf
@@ -130,6 +124,13 @@ class Simulator:
                     component.tr = component.avance()
                 else:
                     pass
+            # append graph variables
+            time.append(t)
+            for trace in self.graph_traces:
+                command = get_append_command(trace)
+                exec(command)
+
+        # add graph value
         self.graph_values.append(time)
         for trace in self.graph_traces:
             exec(F"self.graph_values.append({trace['name']})")
