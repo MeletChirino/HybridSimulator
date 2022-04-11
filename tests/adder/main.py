@@ -9,6 +9,7 @@ from kernel.simulator import Simulator
 import matplotlib.pyplot as plt
 
 def main():
+    #initialize components
     adder = Adder(
             "Adder4x1",
             in_ports = 4,
@@ -33,23 +34,28 @@ def main():
     integrateur = Integrateur("Integrator", in_ports = 1, out_ports = 1)
     # connect components
     connect(
+            # out port
             (step1, 0),
             #in ports
             (adder, 0)
             )
     connect(
+            # out port
             (step2, 0),
             (adder, 1)
             )
     connect(
+            # out port
             (step3, 0),
             (adder, 2)
             )
     connect(
+            # out port
             (step4, 0),
             (adder, 3)
             )
     connect(
+            # out port
             (adder, 0),
             (integrateur, 0)
             )
@@ -58,15 +64,18 @@ def main():
             adder, integrateur
             ]
     #set step values
+    # IMPORTANT values must be set after connection
     step1.set_values(1, 1, 2)
     step2.set_values(2, 0, -3)
     step3.set_values(3, 0, -2)
     step4.set_values(4, 0, 10)
     integrateur.set_values(1/1000)
+    # log object
     log_ = Log(
             debug_mode = True
             )
 
+    # --- Starting simulator ---
     simulator = Simulator(
             5,
             log = log_,
@@ -102,9 +111,20 @@ def main():
     step_data = simulator.get_graph_data(
             trace_name = 'step_data'
             )
+    integrated_data = simulator.get_graph_data(
+            trace_name = 'integrateur'
+            )
 
-    plt.plot(time_data.data, step_data.data)
-    plt.savefig("fig1.png")
-    plt.plot(time_data.data, draw_data[3].data)
+    plt.plot(
+            time_data.data,
+            step_data.data,
+            label = 'Added steps'
+            )
+    plt.plot(
+            time_data.data,
+            integrated_data.data,
+            label = 'Integrated Data'
+            )
+    plt.legend()
     plt.savefig("fig2.png")
 
