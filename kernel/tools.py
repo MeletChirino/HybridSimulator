@@ -39,7 +39,7 @@ class Log:
     def print(self, logs):
         if self.debug_mode:
             f = open(self.file_name, 'a')
-            f.write(logs)
+            f.write(f'{logs}\n')
             f.close()
 
 class Data:

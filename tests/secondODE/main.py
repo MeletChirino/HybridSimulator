@@ -66,16 +66,16 @@ def main():
     switch.set_coeff(-0.8)
     switch.set_init_val(0)
 
-    integrateur_v.set_values(1/1000)
-    integrateur_h.set_values(1/1000)
+    integrateur_v.set_values(1/100)
+    integrateur_h.set_values(1/100)
     # log object
     log_ = Log(
-            debug_mode = False
+            debug_mode = True
             )
 
     # --- Starting simulator ---
     simulator = Simulator(
-            5,
+            2,
             log = log_,
             component_list = component_list
             )
@@ -84,7 +84,6 @@ def main():
                 "name": "integrateur_h_out",
                 "port": "output[0]",
                 "component": integrateur_h,
-                "index": 3
                 }
             )
     simulator.add_graph_trace(
@@ -104,7 +103,7 @@ def main():
             )
     simulator.add_graph_trace(
             {
-                "name": "switch",
+                "name": "switch_out",
                 "port": "output[0]",
                 "component": switch,
                 }
@@ -113,6 +112,20 @@ def main():
             {
                 "name": "switch_in0",
                 "port": "input[0]",
+                "component": switch,
+                }
+            )
+    simulator.add_graph_trace(
+            {
+                "name": "switch_in1",
+                "port": "input[1]",
+                "component": switch,
+                }
+            )
+    simulator.add_graph_trace(
+            {
+                "name": "switch_in2",
+                "port": "input[2]",
                 "component": switch,
                 }
             )
@@ -128,10 +141,16 @@ def main():
             trace_name = 'integrateur_h_in'
             )
     switch_data = simulator.get_graph_data(
-            trace_name = 'switch'
+            trace_name = 'switch_out'
             )
     switch_in_data = simulator.get_graph_data(
             trace_name = 'switch_in0'
+            )
+    switch_in1_data = simulator.get_graph_data(
+            trace_name = 'switch_in1'
+            )
+    switch_in2_data = simulator.get_graph_data(
+            trace_name = 'switch_in2'
             )
     plt.plot(
             time_data.data,
@@ -146,13 +165,25 @@ def main():
     plt.plot(
             time_data.data,
             switch_data.data,
-            label = 'Switch Data'
+            label = 'Out Switch Data'
+            )
+    '''
+    plt.plot(
+            time_data.data,
+            switch_in1_data.data,
+            label = 'In1 Switch Data'
             )
     plt.plot(
             time_data.data,
             switch_in_data.data,
-            label = 'In Switch Data'
+            label = 'In0 Switch Data'
             )
+    plt.plot(
+            time_data.data,
+            switch_in2_data.data,
+            label = 'In2 Switch Data'
+            )
+             '''
     plt.title('Hybrid Simulator')
     plt.legend()
     test_path = os.path.dirname(__file__)

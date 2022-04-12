@@ -68,7 +68,7 @@ class Simulator:
         self.log.print("Component init finished")
 
         while(t < self.t_end):
-            print(F" ------ Time {t} ------ ")
+            self.log.print(F" ------ Time {t} ------ ")
 
             #find lowest tr
             self.log.print("finding lowest tr")
@@ -107,6 +107,7 @@ class Simulator:
                         external_comp.append(
                                 impact_port.target
                                 )
+            #import pdb; pdb.set_trace()
 
             for port in external_events:
                 self.log.print(F"{port.source.name} => {port.target.name}.{port.name}")
@@ -121,10 +122,14 @@ class Simulator:
                     component.internal()
                     component.tr = component.avance()
                 elif exist(external_comp, component):
-                    index = external_comp.index(component)
-                    port = external_events[index]
-                    component.external(port)
-                    component.tr = component.avance()
+                    index = 0
+                    for component_ in external_comp:
+                        if component == component_:
+                            #ge index
+                            port = external_events[index]
+                            component_.external(port)
+                            component_.tr = component_.avance()
+                        index += 1
                 else:
                     pass
             # append graph variables
