@@ -3,7 +3,7 @@ from math import inf
 from scipy import integrate
 
 # local modules
-from components.base_classes import Component
+from components.base_classes import Component, InPort
 
 class Integrateur(Component):
     def set_values(self, hstep):
@@ -26,11 +26,12 @@ class Integrateur(Component):
     def internal(self):
         if self.current_state == 0:
             self.x += float(self.dx * self.hstep)
+            self.dx = float(self.input[0].value)
             #import pdb; pdb.set_trace()
 
     def external(self, port):
         if(self.current_state == 0 and port == self.input[0]):
-            self.x += self.dx * self.te
+            self.x += float(self.dx * self.te)
             self.dx = float(self.input[0].value)
 
     def avance(self):
