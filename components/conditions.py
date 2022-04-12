@@ -24,6 +24,7 @@ class MoonlightSwitch(Component):
 
     def external(self, port):
         if port == self.input[0]:
+            print('switch external')
             cond = self.input[0].value
             threshold = self.input[1].value
             if self.current_state == 0 and (cond <= threshold):
