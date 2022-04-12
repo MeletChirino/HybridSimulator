@@ -5,6 +5,7 @@ import os
 
 # local modules
 from tests.gravity.main import main
+from tests.adder.main import main as main_adder
 
 if __name__ == "__main__":
     if sys.argv[1] == 'createtest':
@@ -27,4 +28,4 @@ if __name__ == "__main__":
     elif sys.argv[1] == 'runtest':
         #test_name = sys.argv[2]
         #command = F"import tests.{test_name}; {test_name}.main()"
-        main()
+        main_adder()

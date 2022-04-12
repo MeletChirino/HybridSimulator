@@ -67,7 +67,7 @@ def main():
     #set step values
     # IMPORTANT values must be set after connection
     step1.set_values(1, 1, 2)
-    step2.set_values(2, 0, -3)
+    step2.set_values(2, 0, -9)
     step3.set_values(7, 2, -2)
     step4.set_values(4, 0, 10)
     integrateur.set_values(1/1000)
