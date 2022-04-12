@@ -16,10 +16,13 @@ class Constant(Component):
         if not output_ports == 1:
             raise Exception("1 Output Port Required")
         self.output[0].update_value(self.x0)
+        self.tr = inf
+
     def avance(self):
         return inf
     def internal(self):
         pass
+
     def external(self):
         pass
     def generate_output(self):
