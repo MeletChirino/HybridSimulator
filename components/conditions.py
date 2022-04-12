@@ -4,6 +4,48 @@ from math import inf
 # local modules
 from components.base_classes import Component
 
+class MoonlightSwitch(Component):
+    def set_coeff(self, coef):
+        self.coeff = coef
+    def set_init_val(self, init):
+        self.out_val= init
+    def init(self):
+        output_ports = len(self.output)
+        if not output_ports == 1:
+            raise Exception("1 Output Port Required")
+        self.tr = inf
+        self.current_state = 0
+        self.output[0].update_value(self.out_val)
+
+    def internal(self):
+        if self.current_state == 1:
+            self.current_state = 0
+        pass
+
+    def external(self, port):
+        if port == self.input[0]:
+            cond = self.input[0].value
+            threshold = self.input[1].value
+            if self.current_state == 0 and (cond <= threshold):
+                self.out_val = self.coeff * self.input[2].value
+                self.current_state = 1
+                #import pdb; pdb.set_trace()
+
+    def avance(self):
+        if self.current_state == 0:
+            return inf
+        if self.current_state == 1:
+            return 0
+
+    def generate_output(self):
+        print('switch Output')
+        if self.current_state == 1:
+            return self.output[0].update_value(self.out_val)
+
+    def conflict(self):
+        pass
+
+
 class Switch(Component):
     def set_intervals(self, *interval_list):
         # (inf, 3), (3, 0), (0, -inf)
