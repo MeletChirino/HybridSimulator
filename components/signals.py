@@ -19,7 +19,7 @@ class Constant(Component):
         self.tr = inf
 
     def avance(self):
-        pass
+        return inf
 
     def internal(self):
         pass
@@ -27,7 +27,7 @@ class Constant(Component):
     def external(self):
         pass
 
-    def generate_outpue(self):
+    def generate_output(self):
         pass
 
 
