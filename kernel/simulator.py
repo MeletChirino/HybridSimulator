@@ -21,6 +21,9 @@ class Simulator:
         self.component_list.append(component)
 
     def add_graph_trace(self, trace):
+        component = trace['component']
+        index = self.component_list.index(component)
+        trace['index'] = index
         self.graph_traces.append(trace)
 
     def draw_graph(self):
