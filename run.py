@@ -28,4 +28,4 @@ if __name__ == "__main__":
     elif sys.argv[1] == 'runtest':
         #test_name = sys.argv[2]
         #command = F"import tests.{test_name}; {test_name}.main()"
-        main_adder()
+        main()

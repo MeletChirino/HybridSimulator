@@ -68,7 +68,7 @@ class Simulator:
         self.log.print("Component init finished")
 
         while(t < self.t_end):
-            self.log.print(F" ------ Time {t} ------ ")
+            print(F" ------ Time {t} ------ ")
 
             #find lowest tr
             self.log.print("finding lowest tr")

@@ -2,7 +2,7 @@
 from components.arithmetics import Adder4x1 as Adder
 from components.signals import Step, Constant
 from components.ode import Integrateur
-from components.conditions import Switch
+from components.conditions import MoonlightSwitch as Switch
 from kernel.tools import connect, Log
 from kernel.simulator import Simulator
 
@@ -39,17 +39,9 @@ def main():
             "Constant2",
             out_ports = 1,
             )
-    constant4 = Constant(
-            "Constant4",
-            out_ports = 1,
-            )
-    constant6 = Constant(
-            "Constant6",
-            out_ports = 1,
-            )
     switch = Switch(
             "Switch",
-            in_ports = 4,
+            in_ports = 3,
             out_ports = 1
             )
     # connect components
@@ -77,40 +69,28 @@ def main():
     connect(
             # out port
             (adder, 0),
-            (switch, 0)
+            (switch, 0),
+            (switch, 2),
             )
     connect(
             (constant2, 0),
             (switch, 1),
             )
-    connect(
-            (constant4, 0),
-            (switch, 2),
-            )
-    connect(
-            (constant6, 0),
-            (switch, 3),
-            )
 
     component_list = [
             step1, step2, step3, step4,
-            adder, constant2, constant4,
-            constant6, switch
+            adder, constant2, switch
             ]
+
     #set step values
     # IMPORTANT values must be set after connection
-    step1.set_values(1, 0, 2)
-    step2.set_values(2, 0, 23)
-    step3.set_values(4, 2, -22)
-    step4.set_values(6, 0, 10)
+    step1.set_values(1, 3, 2)
+    step2.set_values(2, 0, 3)
+    step3.set_values(3, 0, -17)
+    step4.set_values(7, 0, 1)
     constant2.set_values(2)
-    constant4.set_values(4)
-    constant6.set_values(6)
-    switch.set_intervals(
-           (inf, 10),
-           (10, 0),
-           (0, -inf),
-           )
+    switch.set_coeff(-0.8)
+    switch.set_init_val(0)
     # log object
     log_ = Log(
             debug_mode = False
@@ -125,15 +105,15 @@ def main():
     simulator.add_graph_trace(
             {
                 "name": "step_data",
+                "component": adder,
                 "port": "output[0]",
-                "index": 4
                 }
             )
     simulator.add_graph_trace(
             {
                 "name": "switch",
+                "component": switch,
                 "port": "output[0]",
-                "index": 8
                 }
             )
 
@@ -145,7 +125,7 @@ def main():
     step_data = simulator.get_graph_data(
             trace_name = 'step_data'
             )
-    integrated_data = simulator.get_graph_data(
+    switch_data = simulator.get_graph_data(
             trace_name = 'switch'
             )
 
@@ -156,8 +136,8 @@ def main():
             )
     plt.plot(
             time_data.data,
-            integrated_data.data,
-            label = 'Integrated Data'
+            switch_data.data,
+            label = 'Switch Data'
             )
     plt.title('Hybrid Simulator')
     plt.legend()
