@@ -20,13 +20,11 @@ class Constant(Component):
 
     def avance(self):
         return inf
-
     def internal(self):
         pass
 
     def external(self):
         pass
-
     def generate_output(self):
         pass
 
