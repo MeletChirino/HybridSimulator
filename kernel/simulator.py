@@ -63,7 +63,6 @@ class Simulator:
 
         time = []
         for trace in self.graph_traces:
-            print(trace)
             exec(F"{trace['name']} = []")
 
         self.log.print("Component init finished")
@@ -150,4 +149,4 @@ class Simulator:
 
 def get_append_command(trace):
     command = F"{trace['name']}.append(self.component_list[{trace['index']}].{trace['port']}.value)"
-    0ireturn command
+    return command

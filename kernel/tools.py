@@ -1,5 +1,5 @@
+# python modules
 import os
-i python modules
 import time
 
 def exist(list_, element):
