@@ -86,14 +86,14 @@ def main():
             {
                 "name": "step_data",
                 "port": "output[0]",
-                "index": 4
+                "component": adder,
                 }
             )
     simulator.add_graph_trace(
             {
                 "name": "integrateur",
                 "port": "output[0]",
-                "index": 5
+                "component": integrateur,
                 }
             )
 
