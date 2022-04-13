@@ -4,6 +4,7 @@ from os import mkdir, path
 import os
 
 from tests.secondODE.main import main
+#from tests.integrateur_ed.main import main
 
 if __name__ == "__main__":
     if sys.argv[1] == 'createtest':
@@ -24,7 +25,7 @@ if __name__ == "__main__":
         mkdir(new_folder)
 
     elif sys.argv[1] == 'runtest':
-        '''test_name = sys.argv[2]
-        command = F"import tests.{test_name}; {test_name}.main()"
-        exec(command)'''
+        # test_name = sys.argv[2]
+        # command = F"import tests.{test_name}; {test_name}.main()"
+        # exec(command)
         main()
