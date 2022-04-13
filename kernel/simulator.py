@@ -27,7 +27,6 @@ class Simulator:
         self.graph_traces.append(trace)
 
     def draw_graph(self):
-        print(self.graph_values)
         time = self.graph_values[0]
         values =self.graph_values[1]
         plt.stem(time, values)
@@ -53,8 +52,10 @@ class Simulator:
         return data_list
 
 
-    def run(self):
+    def run(self, **kwargs):
         t = 0
+        if kwargs.get('init_time'):
+            t = kwargs['init_time']
         self.log.print("Component init")
         for component in self.component_list:
             component.init()
@@ -107,7 +108,6 @@ class Simulator:
                         external_comp.append(
                                 impact_port.target
                                 )
-            #import pdb; pdb.set_trace()
 
             for port in external_events:
                 self.log.print(F"{port.source.name} => {port.target.name}.{port.name}")
@@ -150,4 +150,4 @@ class Simulator:
 
 def get_append_command(trace):
     command = F"{trace['name']}.append(self.component_list[{trace['index']}].{trace['port']}.value)"
-    return command
+    0ireturn command

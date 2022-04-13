@@ -9,12 +9,10 @@ class Proc(Component):
 
     def internal(self):
         if(self.current_state == 1):
-            print(F"{self.name}: state 1 => 0")
             self.current_state = 0
 
     def external(self, port):
         if(self.current_state == 0):
-            print(F"{self.name}: state 0 => 1")
             self.current_state = 1
 
     def avance(self):
@@ -27,7 +25,6 @@ class Proc(Component):
 
     def generate_output(self):
         if (self.current_state == 1):
-            print(F"{self.name}: generate impulsion")
             return self.output[0].update_value(1)
 
     def conflict(self):
@@ -44,7 +41,6 @@ class Generator(Component):
     def external(self):
         pass
     def generate_output(self):
-        print(F"{self.name}: generate impulsion")
         return self.output[0].update_value(1)
 
     def conflict(self):
@@ -58,35 +54,29 @@ class Buffer(Component):
 
     def internal(self):
         if(self.current_state == 1):
-            print(F"{self.name}: state 1 => 2")
             self.current_state = 2
             self.q -= 1
             return 0
 
     def external(self, port):
         if(self.current_state == 0 and port == self.input[0]):
-            print(F"{self.name}: state 0 => 1")
             self.current_state = 1
             self.q += 1
             return 0
 
         if(self.current_state == 1 and port == self.input[0]):
-            print(F"{self.name}: state 1 => 1")
             self.q += 1
             return 0
 
         if(self.current_state == 2 and port == self.input[0]):
-            print(F"{self.name}: state 2 => 2")
             self.q += 1
             return 0
 
         if(self.current_state == 2 and self.q > 0 and port == self.input[1]):
-            print(F"{self.name}: state 2 => 1")
             self.current_state = 1
             return 0
 
         if(self.current_state == 2 and self.q == 0 and port == self.input[1]):
-            print(F"{self.name}: state 2 => 0")
             self.current_state = 0
             return 0
 

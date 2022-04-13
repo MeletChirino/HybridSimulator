@@ -27,7 +27,8 @@ class Integrateur(Component):
         if self.current_state == 0:
             self.x += float(self.dx * self.hstep)
             self.dx = float(self.input[0].value)
-            #import pdb; pdb.set_trace()
+        if self.current_state == 1:
+            self.current_state = 0
 
     def external(self, port):
         if(self.current_state == 0 and port == self.input[0]):
@@ -37,16 +38,25 @@ class Integrateur(Component):
         # avoid the simulator go into an error
         if len(self.input) == 1:
             return 0
+
         if self.current_state == 0 and port == self.input[1]:
+            self.current_state = 1
             self.x = self.input[1].value
-            self.dx = self.input[0].value
+            self.dx = float(self.input[0].value)
 
     def avance(self):
-        return self.hstep
+        if self.current_state == 0:
+            return self.hstep
+        elif self.current_state == 1:
+            return 0
 
     def generate_output(self):
         if (self.current_state == 0):
             return self.output[0].update_value(self.x + self.dx * self.hstep)
+        if self.current_state == 1:
+            ret = self.output[0].update_value(self.x)
+            #import pdb; pdb.set_trace()
+            return ret
 
     def conflict(self):
         self.external()

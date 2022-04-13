@@ -33,16 +33,15 @@ class OutPort:
         for port in self.connections:
             port.update(self.value)
             impacted_ports.append(port)
-            #import pdb; pdb.set_trace()
         return impacted_ports
 
 class Component:
     def __init__(self, name, **kwargs):
         self.name = name
         self.current_state = 0
-        self.te = 0.0
-        self.tr = 0.0
-        self.tl = 0.0
+        self.te = 0.0000
+        self.tr = 0.0000
+        self.tl = 0.0000
 
         self.description = ""
         if kwargs.get('description'):
@@ -51,13 +50,11 @@ class Component:
         self.input = []
         if kwargs.get('in_ports'):
             number = kwargs['in_ports']
-            print(F"Setting {number} input ports")
             for i in range(number):
                 self.input.append(InPort(F"IN{i}"))
 
         self.output = []
         if kwargs.get('out_ports'):
             number = kwargs['out_ports']
-            print(F"Setting {number} output ports")
             for i in range(number):
                 self.output.append(OutPort(F"OUT{i}"))

@@ -15,25 +15,20 @@ class Adder4x1(Component):
         #verify input conenctions
         for port in self.input:
             if not port.source:
-                print(F"{port.target}.{port.name} not connected")
                 raise Exception("InputConnectionError")
         self.current_state = 0
         self.tr = inf
         self.sum = 0
         for port in self.input:
             self.sum += port.value
-            print(F'{port.name}.value = {port.value}')
-            print(F'sum = {self.sum}')
         self.output[0].update_value(self.sum)
 
     def internal(self):
         if self.current_state == 1:
-            print(F"{self.name}: state 1 => 0")
             self.current_state = 0
 
     def external(self, port_list):
         if self.current_state == 0:
-            print(F"{self.name}: state 0 => 1")
             self.current_state = 1
             self.sum = 0
             for port in self.input:

@@ -66,8 +66,8 @@ def main():
     switch.set_coeff(-0.8)
     switch.set_init_val(0)
 
-    integrateur_v.set_values(1/100)
-    integrateur_h.set_values(1/100)
+    integrateur_v.set_values(7/1000)
+    integrateur_h.set_values(7/1000)
     # log object
     log_ = Log(
             debug_mode = True
@@ -75,7 +75,7 @@ def main():
 
     # --- Starting simulator ---
     simulator = Simulator(
-            2,
+            12,
             log = log_,
             component_list = component_list
             )
@@ -157,10 +157,22 @@ def main():
             integrated_hdata.data,
             label = 'Integrated_h Data'
             )
+    plt.title('Height Vs Time')
+    plt.legend()
+    test_path = os.path.dirname(__file__)
+    file_name = 'height.png'
+    file_path = F'{test_path}/img/{file_name}'
+    plt.savefig(file_path)
+    plt.show()
+    plt.plot(
+            time_data.data,
+            integrated_hdata.data,
+            label = 'Height'
+            )
     plt.plot(
             time_data.data,
             integrated_vdata.data,
-            label = 'Integrated_v Data'
+            label = 'Velocity'
             )
     plt.plot(
             time_data.data,

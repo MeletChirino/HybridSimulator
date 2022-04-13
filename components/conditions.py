@@ -23,12 +23,10 @@ class MoonlightSwitch(Component):
         pass
 
     def external(self, port):
-        #import pdb; pdb.set_trace()
-        if port == self.input[0]:
+        if self.current_state == 0 and port == self.input[0]:
             cond = self.input[0].value
             threshold = self.input[1].value
             if self.current_state >= 0 and (cond <= threshold):
-                print('switch threshold')
                 self.out_val = self.coeff * self.input[2].value
                 self.current_state = 1
                 #import pdb; pdb.set_trace()
@@ -40,7 +38,6 @@ class MoonlightSwitch(Component):
             return 0
 
     def generate_output(self):
-        print('switch Output')
         if self.current_state == 1:
             return self.output[0].update_value(self.out_val)
 
