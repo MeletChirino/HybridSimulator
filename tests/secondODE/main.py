@@ -3,6 +3,7 @@ from components.arithmetics import Adder4x1 as Adder
 from components.signals import Constant
 from components.conditions import MoonlightSwitch
 from components.ode import Integrateur
+from components.ode import Integrateur_ed
 from kernel.tools import connect, Log
 from kernel.simulator import Simulator
 
@@ -15,13 +16,11 @@ def main():
     constant_h = Constant("height", out_ports = 1)
     constant_0 = Constant("threshold", out_ports = 1)
     #initialize components
-    integrateur_v = Integrateur("Integrator dv", in_ports = 2, out_ports = 1)
-    integrateur_h = Integrateur("Integrator dh", in_ports = 2, out_ports = 1)
-    switch = MoonlightSwitch(
-            "ConditionalSwitch",
-            in_ports = 3,
-            out_ports = 1
-            )
+    #integrateur_v = Integrateur("Integrator dv", in_ports = 1, out_ports = 1)
+    #integrateur_h = Integrateur("Integrator dh", in_ports = 2, out_ports = 1)
+
+    integrateur_v = Integrateur_ed("Integrator dv", in_ports = 1, out_ports = 1)
+    integrateur_h = Integrateur_ed("Integrator dh", in_ports = 2, out_ports = 1)
 
     # connect components
     connect(
