@@ -33,6 +33,13 @@ class Integrateur(Component):
         if(self.current_state == 0 and port == self.input[0]):
             self.x += float(self.dx * self.te)
             self.dx = float(self.input[0].value)
+        # when integrator has a single output next two lines
+        # avoid the simulator go into an error
+        if len(self.input) == 1:
+            return 0
+        if self.current_state == 0 and port == self.input[1]:
+            self.x = self.input[1].value
+            self.dx = self.input[0].value
 
     def avance(self):
         return self.hstep

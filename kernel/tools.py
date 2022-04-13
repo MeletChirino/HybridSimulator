@@ -19,6 +19,7 @@ def connect(source_connection, *target_connections):
     for tuple_ in target_connections:
         target_component = tuple_[0]
         port_index = tuple_[1]
+        print(F"{target_component.name}.{port_index}")
         in_port = target_component.input[port_index]
         if not in_port.type == 'In':
             raise Exception(F'{target_component.name}.{in_port.name} is not input port')
@@ -38,7 +39,7 @@ class Log:
     def print(self, logs):
         if self.debug_mode:
             f = open(self.file_name, 'a')
-            f.write(logs)
+            f.write(f'{logs}\n')
             f.close()
 
 class Data:
