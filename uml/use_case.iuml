@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor PressureSensor
+actor TemperatureSensor
+actor Ventilateur
+Actor Alarme
+rectangle Controller {
+	(Refroidir) -- Ventilateur
+	(Verifier les seuils) <. (Refroidir) : extends
+	(Notifier l'utilisateur) -- Alarme
+	PressureSensor -- (Verifier les seuils)
+	TemperatureSensor -- (Verifier les seuils)
+	(Verifier les seuils) <. (Notifier l'utilisateur) : extends
+	}
+@enduml

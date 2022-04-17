@@ -1,0 +1,35 @@
+@startuml
+title Temperature Sensor Exceeded
+controller -> temperature_sensor : read()
+temperature_sensor --> controller : temperature_data
+alt temperature_data > 30
+	group par
+	controller ->> alarm : StartAlarm()
+	else
+	controller ->> fan : StartFan()
+	end
+end
+	controller ->> controller: StartCounter()
+group par
+	loop temperature_data > 30
+	alt counter >= 30 && temperature_data < 30
+		controller -> fan : StopAlarm()
+		controller -> controller: break()
+	end
+	controller -> controller: CounterIncrease()
+	controller -> temperature_sensor : read()
+	temperature_sensor --> controller : temperature_data
+end
+else
+	loop temperature_data > 30
+		alt counter >= 120
+		controller -> fan : StopFan()
+		controller -> controller: break()
+		end
+	end
+	controller -> controller: CounterIncrease()
+	controller -> temperature_sensor : read()
+	temperature_sensor --> controller : temperature_data
+
+end
+@enduml

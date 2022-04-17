@@ -1,0 +1,19 @@
+@startuml
+title Pressure Sensor Exceeded
+controller -> pressure_sensor : read()
+pressure_sensor --> controller : temperature_data
+alt pressure_data > 10
+	controller ->> alarm : StartAlarm()
+end
+controller ->> controller: StartCounter()
+loop pressure_data > 10
+
+alt counter >= 30 && pressure_data < 10
+	controller -> alarm : StopAlarm()
+	controller -> controller: break()
+end
+controller -> controller: CounterIncrease()
+controller -> pressure_sensor : read()
+pressure_sensor --> controller : pressure_data
+end
+@enduml
