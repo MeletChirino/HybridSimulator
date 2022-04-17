@@ -88,7 +88,7 @@ class Integrateur_ed(Component):
         if(self.current_state == 0 and port == self.input[0]):
             self.x += float(self.dx * self.te)
             self.dx = float(self.input[0].value)
-            import pdb; pdb.set_trace()
+            #import pdb; pdb.set_trace()
 
     def avance(self):
         self.delta_t = (self.delta_x / self.dx)
